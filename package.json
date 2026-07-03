@@ -1,0 +1,17 @@
+{
+  "name": "nekopoi-api",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@sparticuz/chromium": "^131.0.0",
+    "axios": "^1.6.7",
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^5.2.1",
+    "puppeteer-core": "^22.0.0"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

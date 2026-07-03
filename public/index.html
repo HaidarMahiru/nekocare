@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QrtzNeko API — Hentai Streaming API for Developers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#04040a;
+  --surface:rgba(8,8,18,0.9);
+  --surface2:rgba(14,14,28,0.85);
+  --border:rgba(124,58,237,0.12);
+  --border2:rgba(124,58,237,0.22);
+  --accent:#7c3aed;
+  --accent2:#a78bfa;
+  --cyan:#22d3ee;
+  --green:#22c55e;
+  --red:#ef4444;
+  --yellow:#f59e0b;
+  --text:#e2e8f0;
+  --muted:#6b7280;
+  --muted2:#4b5563;
+  --heading:'Syne',system-ui,sans-serif;
+  --body:'Outfit',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  line-height:1.6;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(circle at 20% 20%,rgba(124,58,237,0.04) 0%,transparent 50%),
+    radial-gradient(circle at 80% 80%,rgba(34,211,238,0.03) 0%,transparent 50%),
+    radial-gradient(circle at 50% 50%,rgba(168,85,247,0.02) 0%,transparent 70%);
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+  z-index:0;pointer-events:none;
+}
+::selection{background:var(--accent);color:#fff}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
+
+.container{max-width:1280px;margin:0 auto;padding:0 2rem;position:relative;z-index:1}
+
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 2rem;position:sticky;top:0;z-index:100;
+  background:rgba(4,4,10,0.75);backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{display:flex;align-items:center;gap:.5rem;font-family:var(--heading);font-weight:700;font-size:1.05rem;letter-spacing:.02em}
+.nav-logo span{color:var(--accent2)}
+.nav-actions{display:flex;align-items:center;gap:.75rem}
+.status-dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:statusPulse 2s infinite}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.35}}
+.nav-chip{
+  font-family:var(--mono);font-size:.7rem;
+  background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);
+  color:var(--accent2);padding:.3rem .7rem;border-radius:5px;
+  transition:all .3s;
+}
+.nav-chip:hover{background:rgba(124,58,237,0.15);border-color:rgba(124,58,237,0.4)}
+
+.hero{
+  padding:7rem 0 5rem;text-align:center;position:relative;
+  display:flex;flex-direction:column;align-items:center;gap:1.5rem;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-family:var(--mono);font-size:.7rem;
+  background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);
+  color:var(--green);padding:.35rem .9rem;border-radius:99px;
+  animation:badgeGlow 3s infinite;
+}
+@keyframes badgeGlow{0%,100%{box-shadow:0 0 0 rgba(34,197,94,0)}50%{box-shadow:0 0 18px rgba(34,197,94,0.15)}}
+.hero h1{
+  font-family:var(--heading);font-size:clamp(2.8rem,7vw,5.5rem);font-weight:800;line-height:1.05;
+  letter-spacing:-0.03em;max-width:900px;
+  background:linear-gradient(135deg,#f0e6ff 0%,#c4b5fd 30%,#a78bfa 55%,#22d3ee 85%,#67e8f9 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 30px rgba(124,58,237,0.2));
+  position:relative;
+}
+.hero h1::after{
+  content:'API';
+  position:absolute;top:-1.5rem;right:-2rem;
+  font-family:var(--heading);font-size:1.2rem;font-weight:700;
+  color:var(--accent);-webkit-text-fill-color:var(--accent);
+  background:var(--accent);-webkit-background-clip:unset;
+  filter:none;padding:.2rem .7rem;border-radius:4px;
+  transform:rotate(6deg);letter-spacing:.05em;
+}
+.hero p{
+  font-size:1.15rem;color:var(--muted);max-width:650px;font-weight:300;line-height:1.7;
+}
+.hero-actions{display:flex;gap:.85rem;flex-wrap:wrap;justify-content:center;margin-top:.5rem}
+.btn{
+  display:inline-flex;align-items:center;gap:.45rem;padding:.65rem 1.4rem;
+  border-radius:7px;font-weight:600;font-size:.88rem;cursor:pointer;
+  transition:all .25s;border:none;text-decoration:none;font-family:var(--body);position:relative;overflow:hidden;
+}
+.btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,0.08) 50%,transparent 70%);transform:translateX(-100%);transition:transform .5s}
+.btn:hover::before{transform:translateX(100%)}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 0 24px rgba(124,58,237,0.25)}
+.btn-primary:hover{background:#6d28d9;box-shadow:0 0 36px rgba(124,58,237,0.4);transform:translateY(-2px)}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text)}
+.btn-ghost:hover{background:rgba(124,58,237,0.08);border-color:var(--accent);color:var(--accent2)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.85rem;padding:2rem 0 4rem}
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:1.4rem;text-align:center;
+  transition:all .4s;position:relative;overflow:hidden;
+}
+.stat-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0;transition:opacity .4s;
+}
+.stat-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.stat-card:hover::after{opacity:1}
+.stat-card.fetching .stat-value{animation:shimmer 1.5s infinite}
+@keyframes shimmer{0%,100%{opacity:1}50%{opacity:.5}}
+.stat-value{font-family:var(--heading);font-size:2.4rem;font-weight:800;color:var(--accent2);line-height:1;transition:all .3s}
+.stat-label{font-size:.8rem;color:var(--muted);margin-top:.4rem;font-weight:400}
+
+.section-label{
+  font-family:var(--mono);font-size:.65rem;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--accent2);margin-bottom:.4rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent)}
+.section-title{font-family:var(--heading);font-size:2.4rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-0.02em}
+.section-sub{color:var(--muted);margin-bottom:2rem;font-size:1rem;font-weight:300}
+
+.endpoints{padding:3rem 0 5rem}
+.endpoint-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:.85rem}
+.ep-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:1.5rem;cursor:pointer;transition:all .35s;position:relative;overflow:hidden;
+}
+.ep-card:hover{border-color:var(--accent);box-shadow:0 8px 32px rgba(124,58,237,0.08);transform:translateY(-3px)}
+.ep-card.open{border-color:var(--accent);background:var(--surface2);box-shadow:0 12px 40px rgba(124,58,237,0.12)}
+.ep-header{display:flex;align-items:center;gap:.7rem;margin-bottom:.7rem}
+.ep-method{
+  font-family:var(--mono);font-size:.6rem;font-weight:700;color:var(--green);
+  background:rgba(34,197,94,0.08);padding:.2rem .55rem;border-radius:4px;
+  letter-spacing:.06em;flex-shrink:0;
+}
+.ep-path{font-family:var(--mono);font-size:.82rem;color:var(--accent2);font-weight:500}
+.ep-desc{font-size:.82rem;color:var(--muted);margin-bottom:.8rem;line-height:1.55}
+.ep-meta{display:flex;gap:1rem;font-size:.7rem;color:var(--muted2);font-family:var(--mono)}
+.ep-expand{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+.ep-card.open .ep-expand{display:block}
+.ep-params{margin-bottom:.8rem}
+.ep-params-label{font-size:.68rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem}
+.ep-params-input{
+  width:100%;background:rgba(0,0,0,0.3);border:1px solid var(--border2);border-radius:6px;
+  color:var(--accent2);font-family:var(--mono);font-size:.73rem;padding:.5rem .7rem;
+  outline:none;transition:border-color .2s;
+}
+.ep-params-input:focus{border-color:var(--accent)}
+.ep-response-preview{
+  background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:8px;
+  font-family:var(--mono);font-size:.68rem;line-height:1.5;color:#94a3b8;
+  max-height:200px;overflow-y:auto;position:relative;
+}
+.ep-response-header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.4rem .7rem;background:rgba(124,58,237,0.04);border-bottom:1px solid var(--border);
+}
+.ep-response-label{font-size:.62rem;font-weight:600;color:var(--muted2);letter-spacing:.06em;text-transform:uppercase}
+.ep-response-body{padding:.6rem .7rem;white-space:pre-wrap}
+.ep-try-btn{
+  font-size:.65rem;padding:.2rem .5rem;background:var(--accent);color:#fff;
+  border:none;border-radius:4px;cursor:pointer;font-family:var(--mono);transition:all .2s;
+}
+.ep-try-btn:hover{background:#6d28d9}
+.ep-try-btn:disabled{background:var(--muted2);cursor:not-allowed}
+
+.code-section{padding:3rem 0 5rem}
+.tabs{display:flex;gap:.4rem;margin-bottom:1rem;flex-wrap:wrap}
+.tab-btn{
+  background:transparent;border:1px solid var(--border2);color:var(--muted);
+  padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-family:var(--mono);font-size:.78rem;transition:all .25s;
+}
+.tab-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.tab-btn:hover:not(.active){border-color:var(--accent);color:var(--text)}
+.code-panel{display:none}
+.code-panel.active{display:block}
+.code-block{background:rgba(0,0,0,0.45);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.code-header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.55rem 1rem;background:rgba(124,58,237,0.04);border-bottom:1px solid var(--border);
+}
+.code-lang{font-family:var(--heading);font-size:.7rem;font-weight:600;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em}
+.code-body{
+  padding:1rem 1.2rem;font-family:var(--mono);font-size:.78rem;line-height:1.8;
+  white-space:pre;overflow-x:auto;color:#94a3b8;
+}
+.code-body .kw{color:#c084fc}.code-body .str{color:#86efac}.code-body .fn{color:#67e8f9}.code-body .url{color:#a78bfa}
+
+.features{padding:3rem 0 5rem}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.feat-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:2rem 1.5rem;transition:all .35s;position:relative;overflow:hidden;
+}
+.feat-card:hover{border-color:var(--accent);transform:translateY(-5px)}
+.feat-icon{font-size:2.2rem;margin-bottom:.8rem;display:block}
+.feat-title{font-family:var(--heading);font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.feat-desc{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+.deploy{padding:3rem 0 5rem;text-align:center}
+.deploy-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:3rem 2rem;max-width:650px;margin:0 auto;position:relative;overflow:hidden;
+}
+.deploy-card::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:conic-gradient(from 0deg,transparent,transparent,transparent,rgba(124,58,237,0.06),transparent,transparent);
+  animation:rotate 20s linear infinite;
+}
+@keyframes rotate{100%{transform:rotate(360deg)}}
+.deploy-card>*{position:relative;z-index:1}
+.deploy-card h3{font-family:var(--heading);font-size:1.5rem;margin-bottom:.8rem}
+.deploy-card p{color:var(--muted);margin-bottom:1rem}
+.deploy-code{
+  background:rgba(0,0,0,0.4);border:1px solid var(--border2);border-radius:8px;
+  padding:1rem 1.2rem;font-family:var(--mono);font-size:.78rem;color:var(--accent2);
+  text-align:left;margin:1rem 0;line-height:1.7;
+}
+.deploy-code .cmd{color:var(--green)}.deploy-code .arg{color:var(--cyan)}
+
+footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;color:var(--muted);font-size:.82rem}
+
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+.endpoint-explorer{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:2rem;margin:2rem 0}
+.explorer-title{font-family:var(--heading);font-size:1.2rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.explorer-grid{display:grid;grid-template-columns:200px 1fr;gap:1rem;align-items:start}
+.explorer-select{
+  background:rgba(0,0,0,0.3);border:1px solid var(--border2);border-radius:8px;
+  color:var(--text);font-family:var(--mono);font-size:.8rem;padding:.6rem .8rem;
+  outline:none;cursor:pointer;
+}
+.explorer-select:focus{border-color:var(--accent)}
+.explorer-select option{background:var(--bg);color:var(--text)}
+.explorer-result{
+  background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:8px;
+  font-family:var(--mono);font-size:.72rem;line-height:1.5;color:#94a3b8;
+  max-height:300px;overflow-y:auto;padding:.8rem;white-space:pre-wrap;position:relative;
+}
+.explorer-result .json-key{color:var(--cyan)}.explorer-result .json-str{color:#86efac}.explorer-result .json-num{color:#f9a8d4}.explorer-result .json-bool{color:var(--yellow)}
+.explorer-fetching{position:absolute;inset:0;background:rgba(4,4,10,0.6);display:flex;align-items:center;justify-content:center;border-radius:8px}
+.explorer-spinner{width:24px;height:24px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:768px){
+  .hero h1{font-size:2.2rem}
+  .hero h1::after{display:none}
+  .endpoint-grid{grid-template-columns:1fr}
+  .feat-grid{grid-template-columns:1fr}
+  .explorer-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">🐱 Qrtz<span>Neko</span></div>
+  <div class="nav-actions">
+    <div class="status-dot"></div>
+    <div class="nav-chip" id="baseUrlChip"></div>
+  </div>
+</nav>
+
+<main class="container">
+  <section class="hero">
+    <div class="hero-badge">✦ v1.0 — Production Ready</div>
+    <h1>NekoPoi Streaming API</h1>
+    <p>Unofficial REST API untuk NekoPoi.care. Akses data video, genre, episode, hingga direct stream m3u8 — tanpa API key, tanpa rate limit, selalu online.</p>
+    <div class="hero-actions">
+      <a href="#endpoints" class="btn btn-primary">📡 Jelajahi Endpoint</a>
+      <a href="#explorer" class="btn btn-ghost">🔍 Live Explorer</a>
+    </div>
+  </section>
+
+  <div class="stats fade-in" id="statsBar">
+    <div class="stat-card"><div class="stat-value" id="statEndpoints">10</div><div class="stat-label">Endpoints</div></div>
+    <div class="stat-card"><div class="stat-value" id="statUptime">—</div><div class="stat-label">Response Time</div></div>
+    <div class="stat-card"><div class="stat-value" id="statVideos">—</div><div class="stat-label">Video Tersedia</div></div>
+    <div class="stat-card"><div class="stat-value">∞</div><div class="stat-label">Rate Limit</div></div>
+  </div>
+
+  <section class="endpoints fade-in" id="endpoints">
+    <div class="section-label">01 · Endpoints</div>
+    <h2 class="section-title">API Reference</h2>
+    <p class="section-sub">Sepuluh endpoint RESTful dengan response JSON. Klik kartu untuk melihat detail.</p>
+    <div class="endpoint-grid" id="epGrid"></div>
+  </section>
+
+  <section class="fade-in" id="explorer">
+    <div class="section-label">02 · Interactive Explorer</div>
+    <h2 class="section-title">Coba Langsung</h2>
+    <p class="section-sub">Pilih endpoint, lihat response JSON real-time dari server.</p>
+    <div class="endpoint-explorer">
+      <div class="explorer-title">⚡ Live Request</div>
+      <div class="explorer-grid">
+        <select class="explorer-select" id="explorerSelect"></select>
+        <div class="explorer-result" id="explorerResult">
+          <span style="color:var(--muted)">← Pilih endpoint untuk melihat response</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="code-section fade-in">
+    <div class="section-label">03 · Code Examples</div>
+    <h2 class="section-title">Integrasi</h2>
+    <p class="section-sub">Siap pakai dalam berbagai bahasa pemrograman.</p>
+    <div class="tabs" id="codeTabs">
+      <button class="tab-btn active" data-tab="curl">curl</button>
+      <button class="tab-btn" data-tab="js">JavaScript</button>
+      <button class="tab-btn" data-tab="python">Python</button>
+      <button class="tab-btn" data-tab="go">Go</button>
+      <button class="tab-btn" data-tab="php">PHP</button>
+    </div>
+    <div class="code-panel active" id="panel-curl"></div>
+    <div class="code-panel" id="panel-js"></div>
+    <div class="code-panel" id="panel-python"></div>
+    <div class="code-panel" id="panel-go"></div>
+    <div class="code-panel" id="panel-php"></div>
+  </section>
+
+  <section class="deploy fade-in">
+    <div class="section-label">04 · Self-Host</div>
+    <div class="deploy-card">
+      <h3>Deploy ke Vercel</h3>
+      <p>Clone repository dan jalankan dalam hitungan menit. Gratis, tanpa konfigurasi rumit.</p>
+      <div class="deploy-code">
+        <span class="cmd">git clone</span> <span class="arg">https://github.com/username/qrtzneko-api</span>
+        <span class="cmd">cd</span> <span class="arg">qrtzneko-api</span>
+        <span class="cmd">vercel</span> <span class="arg">--prod</span>
+      </div>
+      <a href="https://vercel.com" class="btn btn-primary" target="_blank">Deploy Now →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>QrtzNeko API · Tidak berafiliasi dengan NekoPoi.care · Dibuat dengan ❤️</p>
+</footer>
+
+<script>
+const BASE = window.location.origin;
+document.getElementById('baseUrlChip').textContent = BASE;
+
+const ENDPOINTS = [
+  {id:'category',path:'/api/category',desc:'Semua kategori NekoPoi lengkap dengan endpoint terkait.',params:'',resp:'{\n  "success":true,\n  "data":[\n    {"name":"3D Hentai","slug":"3d-hentai",\n     "endpoint":"/api/list?category=3d-hentai"},\n    {"name":"JAV Cosplay","slug":"jav-cosplay",\n     "endpoint":"/api/list?category=jav-cosplay"}\n  ]\n}',timing:'< 1s',cache:'5 menit'},
+  {id:'list',path:'/api/list',desc:'Video dari home, kategori, halaman, atau A-Z.',params:'type=home&category=3d-hentai&page=1&letter=a',resp:'{\n  "success":true,\n  "data":[\n    {"title":"[3D SUB INDO] Mantra Cabul...",\n     "url":"https://...","poster":"https://..."}\n  ],\n  "meta":{"url":"https://...","count":20}\n}',timing:'< 2s',cache:'5 menit'},
+  {id:'search',path:'/api/search',desc:'Cari video berdasarkan judul.',params:'q=elf',resp:'{\n  "success":true,\n  "data":[\n    {"title":"[3D] Rahasia Futa Elf...","url":"https://..."}\n  ]\n}',timing:'< 2s',cache:'5 menit'},
+  {id:'detail',path:'/api/detail',desc:'Detail video: judul, poster, deskripsi, iframe player.',params:'url=https://nekopoi.care/...',resp:'{\n  "success":true,\n  "data":{\n    "title":"...","poster":"https://...",\n    "description":"...","iframes":["..."]\n  }\n}',timing:'< 2s',cache:'5 menit'},
+  {id:'stream',path:'/api/stream',desc:'Direct m3u8 via headless browser. 15–30 detik.',params:'url=https://nekopoi.care/...',resp:'{\n  "success":true,\n  "stream_url":"https://...m3u8?t=..."\n}',timing:'15–30s ⚠️',cache:'Tidak'},
+  {id:'genres',path:'/api/genres',desc:'Semua genre: Ahegao, Big Boobs, NTR, dsb.',params:'',resp:'{\n  "success":true,\n  "data":[\n    {"name":"Ahegao","url":"https://..."},\n    {"name":"Big Boobs","url":"https://..."}\n  ]\n}',timing:'< 1s',cache:'5 menit'},
+  {id:'genre',path:'/api/genre',desc:'Video berdasarkan genre spesifik.',params:'url=https://nekopoi.care/genre/big-boobs/&page=1',resp:'{\n  "success":true,\n  "data":[\n    {"title":"Bakunyuu Bomb Ep 1","url":"https://..."}\n  ]\n}',timing:'< 2s',cache:'5 menit'},
+  {id:'episodes',path:'/api/episodes',desc:'Semua episode dari halaman seri/batch.',params:'url=https://nekopoi.care/episode/kokuhaku-sub/',resp:'{\n  "success":true,\n  "data":[\n    {"title":"Kokuhaku Vol 1 Sub-Eng","url":"https://..."}\n  ]\n}',timing:'< 2s',cache:'5 menit'},
+  {id:'random',path:'/api/random',desc:'URL video acak.',params:'',resp:'{\n  "success":true,\n  "url":"https://nekopoi.care/..."\n}',timing:'< 2s',cache:'Tidak'},
+  {id:'schedule',path:'/api/schedule',desc:'Jadwal rilis hentai dari Jepang.',params:'',resp:'{\n  "success":true,\n  "data":[\n    {"date":"Mei 2026",\n     "items":["Chimimouryou (Ep 2)"]}\n  ]\n}',timing:'< 2s',cache:'5 menit'},
+];
+
+const epGrid = document.getElementById('epGrid');
+ENDPOINTS.forEach(ep => {
+  const card = document.createElement('div');
+  card.className = 'ep-card';
+  card.innerHTML = `
+    <div class="ep-header">
+      <span class="ep-method">GET</span>
+      <span class="ep-path">${ep.path}</span>
+    </div>
+    <div class="ep-desc">${ep.desc}</div>
+    <div class="ep-meta"><span>⏱ ${ep.timing}</span><span>📦 ${ep.cache}</span></div>
+    <div class="ep-expand">
+      <div class="ep-params">
+        <div class="ep-params-label">Parameter</div>
+        <input class="ep-params-input" value="${ep.params||'(tidak ada)'}" readonly>
+      </div>
+      <div class="ep-response-preview">
+        <div class="ep-response-header">
+          <span class="ep-response-label">Response JSON</span>
+          <button class="ep-try-btn" data-path="${ep.path}" data-params="${encodeURIComponent(ep.params||'')}">Try It</button>
+        </div>
+        <div class="ep-response-body">${ep.resp}</div>
+      </div>
+    </div>`;
+  card.addEventListener('click',e=>{
+    if(e.target.closest('.ep-try-btn')) return;
+    card.classList.toggle('open');
+  });
+  card.querySelector('.ep-try-btn').addEventListener('click',async e=>{
+    e.stopPropagation();
+    const btn = e.target;
+    const path = btn.dataset.path;
+    let params = decodeURIComponent(btn.dataset.params||'');
+    if(params==='(tidak ada)') params='';
+    const url = BASE + path + (params?'?'+params:'');
+    btn.disabled = true; btn.textContent = '...';
+    try{
+      const t0 = Date.now();
+      const res = await fetch(url);
+      const ms = Date.now()-t0;
+      const data = await res.json();
+      const body = card.querySelector('.ep-response-body');
+      body.textContent = JSON.stringify(data,null,2);
+      body.style.color = res.ok ? '#86efac' : '#fca5a5';
+      setTimeout(()=>body.style.color='#94a3b8',3000);
+    }catch(err){
+      card.querySelector('.ep-response-body').textContent = 'Error: '+err.message;
+    }
+    btn.disabled = false; btn.textContent = 'Try It';
+  });
+  epGrid.appendChild(card);
+});
+
+const codeSnippets = {
+  curl:`curl "${BASE}/api/search?q=elf"`,
+  js:`const res = await fetch("${BASE}/api/search?q=elf");
+const data = await res.json();
+console.log(data);`,
+  python:`import requests
+res = requests.get("${BASE}/api/search", params={"q":"elf"})
+data = res.json()
+print(data)`,
+  go:`resp, _ := http.Get("${BASE}/api/search?q=elf")
+defer resp.Body.Close()
+var data map[string]interface{}
+json.NewDecoder(resp.Body).Decode(&data)
+fmt.Println(data)`,
+  php:`$response = file_get_contents("${BASE}/api/search?q=elf");
+$data = json_decode($response, true);
+print_r($data);`
+};
+
+Object.keys(codeSnippets).forEach(lang=>{
+  const panel = document.getElementById('panel-'+lang);
+  panel.innerHTML = `<div class="code-block">
+    <div class="code-header"><span class="code-lang">${lang}</span><button class="ep-try-btn copy-btn" data-lang="${lang}">Copy</button></div>
+    <div class="code-body">${codeSnippets[lang].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div></div>`;
+});
+
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.code-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+document.querySelectorAll('.copy-btn').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    const lang = btn.dataset.lang;
+    navigator.clipboard.writeText(codeSnippets[lang]).then(()=>{
+      btn.textContent='✓';btn.style.color='var(--green)';
+      setTimeout(()=>{btn.textContent='Copy';btn.style.color=''},1500);
+    });
+  });
+});
+
+const explorerSelect = document.getElementById('explorerSelect');
+const explorerResult = document.getElementById('explorerResult');
+ENDPOINTS.forEach(ep=>{
+  const opt = document.createElement('option');
+  opt.value = JSON.stringify({path:ep.path,params:ep.params});
+  opt.textContent = `GET ${ep.path}`;
+  explorerSelect.appendChild(opt);
+});
+explorerSelect.addEventListener('change',async()=>{
+  if(!explorerSelect.value) return;
+  const {path,params} = JSON.parse(explorerSelect.value);
+  let url = BASE + path;
+  if(params && params!=='(tidak ada)') url += '?' + params;
+  explorerResult.innerHTML = '<div class="explorer-fetching"><div class="explorer-spinner"></div></div>';
+  try{
+    const t0 = Date.now();
+    const res = await fetch(url);
+    const ms = Date.now()-t0;
+    const data = await res.json();
+    const colored = JSON.stringify(data,null,2)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,m=>{
+        if(/^"/.test(m)){if(/:$/.test(m))return'<span class="json-key">'+m+'</span>';return'<span class="json-str">'+m+'</span>'}
+        if(/true|false/.test(m))return'<span class="json-bool">'+m+'</span>';
+        if(/null/.test(m))return'<span style="color:var(--muted2)">'+m+'</span>';
+        return'<span class="json-num">'+m+'</span>';
+      });
+    explorerResult.innerHTML = colored;
+  }catch(err){
+    explorerResult.innerHTML = '<span style="color:var(--red)">Error: '+err.message+'</span>';
+  }
+});
+
+async function fetchStats(){
+  const t0 = Date.now();
+  try{
+    const res = await fetch(BASE+'/api/list?category=3d-hentai');
+    const ms = Date.now()-t0;
+    const data = await res.json();
+    document.getElementById('statUptime').textContent = ms + 'ms';
+    document.getElementById('statVideos').textContent = (data?.meta?.count||data?.data?.length||'?');
+  }catch(e){
+    document.getElementById('statUptime').textContent = 'offline';
+    document.getElementById('statVideos').textContent = '—';
+  }
+}
+fetchStats();
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting) entry.target.classList.add('visible');});
+},{threshold:0.08});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
