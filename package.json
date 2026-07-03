@@ -5,13 +5,13 @@
     "dev": "vercel dev"
   },
   "dependencies": {
-    "@sparticuz/chromium": "^131.0.0",
+    "@sparticuz/chromium": "^138.0.2",
     "axios": "^1.6.7",
     "cheerio": "^1.0.0-rc.12",
     "express": "^5.2.1",
-    "puppeteer-core": "^22.0.0"
+    "puppeteer-core": "^24.12.1"
   },
   "engines": {
-    "node": "22.x"
+    "node": "20.x"
   }
 }
