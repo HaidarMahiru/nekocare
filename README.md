@@ -2,16 +2,16 @@
 
 <br/>
 
-<h2>🐱 QrtzNeko API</h2>
+<h2>🐱 HMNeko API</h2>
 
-<img src="https://i.postimg.cc/Dy3twC9Z/qrtzneko.gif" width="100%" style="border-radius:24px" alt="qrtzneko" />
+<img src="https://i.postimg.cc/Dy3twC9Z/HMNeko.gif" width="100%" style="border-radius:24px" alt="HMNeko" />
 
 <p><strong>Unofficial REST API for <a href="https://nekopoi.care">NekoPoi.care</a></strong><br/>
 Scrape, search, stream, and explore hentai subtitle Indonesia — all in one clean API.</p>
 
 <br/>
 
-[![Live API](https://img.shields.io/badge/🌐_Live_API-qrtzneko.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://qrtzneko.vercel.app)
+[![Live API](https://img.shields.io/badge/🌐_Live_API-hmnekopoi.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://hmnekopoi.vercel.app)
 [![Endpoints](https://img.shields.io/badge/📡_Endpoints-10-6e40c9?style=for-the-badge)](#-endpoint-reference)
 [![No Rate Limit](https://img.shields.io/badge/⚡_Rate_Limit-NONE-22c55e?style=for-the-badge)](#%EF%B8%8F-limitations)
 [![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000?style=for-the-badge&logo=vercel)](https://vercel.com)
@@ -22,7 +22,7 @@ Scrape, search, stream, and explore hentai subtitle Indonesia — all in one cle
 [![Puppeteer](https://img.shields.io/badge/Puppeteer-40B5A4?style=flat-square&logo=puppeteer&logoColor=white)](https://pptr.dev)
 [![Cheerio](https://img.shields.io/badge/Cheerio-E88C1F?style=flat-square)](https://cheerio.js.org)
 [![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
-[![JSON](https://img.shields.io/badge/Response-JSON-blue?style=flat-square)](https://qrtzneko.vercel.app/api/category)
+[![JSON](https://img.shields.io/badge/Response-JSON-blue?style=flat-square)](https://hmnekopoi.vercel.app/api/category)
 [![REST](https://img.shields.io/badge/API-REST-orange?style=flat-square)](#)
 
 <br/>
@@ -45,7 +45,7 @@ Scrape, search, stream, and explore hentai subtitle Indonesia — all in one cle
 
 | Metric | Value |
 |--------|-------|
-| 🌐 Base URL | `https://qrtzneko.vercel.app` |
+| 🌐 Base URL | `https://hmnekopoi.vercel.app` |
 | 📡 Total Endpoints | **10** |
 | ⚡ Rate Limit | **None** |
 | 🔑 Auth Required | **No** |
@@ -77,13 +77,13 @@ Scrape, search, stream, and explore hentai subtitle Indonesia — all in one cle
 
 ```bash
 # Cek semua kategori
-curl "https://qrtzneko.vercel.app/api/category"
+curl "https://hmnekopoi.vercel.app/api/category"
 
 # Cari video
-curl "https://qrtzneko.vercel.app/api/search?q=elf"
+curl "https://hmnekopoi.vercel.app/api/search?q=elf"
 
 # Ambil stream m3u8 langsung (15–30 detik)
-curl "https://qrtzneko.vercel.app/api/stream?url=https://nekopoi.care/3d-sub-indo-mantra-cabul-ibu-guru-membuat-kontlo-langsung-ngaceng/"
+curl "https://hmnekopoi.vercel.app/api/stream?url=https://nekopoi.care/3d-sub-indo-mantra-cabul-ibu-guru-membuat-kontlo-langsung-ngaceng/"
 ```
 
 Butuh lebih banyak contoh? Lihat bagian [Code Examples](#-code-examples) di bawah.
@@ -92,7 +92,7 @@ Butuh lebih banyak contoh? Lihat bagian [Code Examples](#-code-examples) di bawa
 
 ## 📡 Endpoint Reference
 
-> **Base URL:** `https://qrtzneko.vercel.app`
+> **Base URL:** `https://hmnekopoi.vercel.app`
 
 | # | Endpoint | Method | Deskripsi | Avg Response |
 |---|----------|--------|-----------|:------------:|
@@ -120,7 +120,7 @@ GET /api/category
 ```
 
 ```bash
-curl "https://qrtzneko.vercel.app/api/category"
+curl "https://hmnekopoi.vercel.app/api/category"
 ```
 
 **Response**
@@ -176,22 +176,22 @@ GET /api/list?[type]&[page]&[letter]&[category]
 
 ```bash
 # Halaman utama (default)
-curl "https://qrtzneko.vercel.app/api/list"
+curl "https://hmnekopoi.vercel.app/api/list"
 
 # Halaman 3
-curl "https://qrtzneko.vercel.app/api/list?page=3"
+curl "https://hmnekopoi.vercel.app/api/list?page=3"
 
 # Kategori 3D Hentai halaman 2
-curl "https://qrtzneko.vercel.app/api/list?category=3d-hentai&page=2"
+curl "https://hmnekopoi.vercel.app/api/list?category=3d-hentai&page=2"
 
 # Semua hentai A-Z
-curl "https://qrtzneko.vercel.app/api/list?type=hentai-list"
+curl "https://hmnekopoi.vercel.app/api/list?type=hentai-list"
 
 # Semua JAV
-curl "https://qrtzneko.vercel.app/api/list?type=jav-list"
+curl "https://hmnekopoi.vercel.app/api/list?type=jav-list"
 
 # A-Z filter huruf B
-curl "https://qrtzneko.vercel.app/api/list?type=az-list&letter=b"
+curl "https://hmnekopoi.vercel.app/api/list?type=az-list&letter=b"
 ```
 
 **Response**
@@ -245,13 +245,13 @@ GET /api/search?q={keyword}
 
 ```bash
 # Pencarian sederhana
-curl "https://qrtzneko.vercel.app/api/search?q=elf"
+curl "https://hmnekopoi.vercel.app/api/search?q=elf"
 
 # Pencarian dengan spasi (URL encoded)
-curl "https://qrtzneko.vercel.app/api/search?q=big%20boobs"
+curl "https://hmnekopoi.vercel.app/api/search?q=big%20boobs"
 
 # Dari terminal (auto encode)
-curl -G "https://qrtzneko.vercel.app/api/search" --data-urlencode "q=ibu tiri"
+curl -G "https://hmnekopoi.vercel.app/api/search" --data-urlencode "q=ibu tiri"
 ```
 
 **Response**
@@ -292,7 +292,7 @@ GET /api/detail?url={videoUrl}
 **Request Example**
 
 ```bash
-curl "https://qrtzneko.vercel.app/api/detail?url=https://nekopoi.care/3d-sub-indo-mantra-cabul-ibu-guru-membuat-kontlo-langsung-ngaceng/"
+curl "https://hmnekopoi.vercel.app/api/detail?url=https://nekopoi.care/3d-sub-indo-mantra-cabul-ibu-guru-membuat-kontlo-langsung-ngaceng/"
 ```
 
 **Response**
@@ -346,13 +346,13 @@ GET /api/stream?url={videoUrl}
 
 ```bash
 # Ambil stream URL
-curl "https://qrtzneko.vercel.app/api/stream?url=https://nekopoi.care/3d-sub-indo-mantra-cabul-ibu-guru-membuat-kontlo-langsung-ngaceng/"
+curl "https://hmnekopoi.vercel.app/api/stream?url=https://nekopoi.care/3d-sub-indo-mantra-cabul-ibu-guru-membuat-kontlo-langsung-ngaceng/"
 
 # Simpan ke file
-curl -s "https://qrtzneko.vercel.app/api/stream?url=..." | jq -r '.stream_url' > stream.txt
+curl -s "https://hmnekopoi.vercel.app/api/stream?url=..." | jq -r '.stream_url' > stream.txt
 
 # Putar langsung dengan ffplay
-STREAM=$(curl -s "https://qrtzneko.vercel.app/api/stream?url=..." | jq -r '.stream_url')
+STREAM=$(curl -s "https://hmnekopoi.vercel.app/api/stream?url=..." | jq -r '.stream_url')
 ffplay "$STREAM"
 
 # Putar langsung dengan mpv
@@ -402,7 +402,7 @@ GET /api/genres
 ```
 
 ```bash
-curl "https://qrtzneko.vercel.app/api/genres"
+curl "https://hmnekopoi.vercel.app/api/genres"
 ```
 
 **Response**
@@ -443,10 +443,10 @@ GET /api/genre?url={genreUrl}&[page]
 
 ```bash
 # Halaman 1 genre Big Boobs
-curl "https://qrtzneko.vercel.app/api/genre?url=https://nekopoi.care/genre/big-boobs/"
+curl "https://hmnekopoi.vercel.app/api/genre?url=https://nekopoi.care/genre/big-boobs/"
 
 # Halaman 2
-curl "https://qrtzneko.vercel.app/api/genre?url=https://nekopoi.care/genre/big-boobs/&page=2"
+curl "https://hmnekopoi.vercel.app/api/genre?url=https://nekopoi.care/genre/big-boobs/&page=2"
 ```
 
 **Response**
@@ -485,7 +485,7 @@ GET /api/episodes?url={seriesUrl}
 **Request Example**
 
 ```bash
-curl "https://qrtzneko.vercel.app/api/episodes?url=https://nekopoi.care/episode/kokuhaku-sub/"
+curl "https://hmnekopoi.vercel.app/api/episodes?url=https://nekopoi.care/episode/kokuhaku-sub/"
 ```
 
 **Response**
@@ -526,7 +526,7 @@ GET /api/random
 ```
 
 ```bash
-curl "https://qrtzneko.vercel.app/api/random"
+curl "https://hmnekopoi.vercel.app/api/random"
 ```
 
 **Response**
@@ -553,7 +553,7 @@ GET /api/schedule
 ```
 
 ```bash
-curl "https://qrtzneko.vercel.app/api/schedule"
+curl "https://hmnekopoi.vercel.app/api/schedule"
 ```
 
 **Response**
@@ -636,7 +636,7 @@ Semua endpoint mengembalikan format error yang **seragam dan konsisten**, terlep
 #!/bin/bash
 
 QUERY="${1:-elf}"
-BASE="https://qrtzneko.vercel.app"
+BASE="https://hmnekopoi.vercel.app"
 
 echo "🔍 Mencari: $QUERY"
 
@@ -673,7 +673,7 @@ ffplay -loglevel quiet -headers "Referer: https://nekopoi.care/" "$STREAM"
 #!/bin/bash
 
 BATCH_URL="${1:-https://nekopoi.care/episode/kokuhaku-sub/}"
-BASE="https://qrtzneko.vercel.app"
+BASE="https://hmnekopoi.vercel.app"
 OUTPUT_DIR="./downloads"
 mkdir -p "$OUTPUT_DIR"
 
@@ -715,7 +715,7 @@ echo "🎉 Download selesai. File tersimpan di: $OUTPUT_DIR"
 ### Node.js — Full Client
 
 ```javascript
-const BASE_URL = 'https://qrtzneko.vercel.app';
+const BASE_URL = 'https://hmnekopoi.vercel.app';
 
 async function request(path) {
   const res = await fetch(`${BASE_URL}${path}`);
@@ -724,7 +724,7 @@ async function request(path) {
   return data;
 }
 
-const qrtzneko = {
+const HMNeko = {
   async categories() {
     const { data } = await request('/api/category');
     return data;
@@ -780,16 +780,16 @@ const qrtzneko = {
 };
 
 (async () => {
-  const results = await qrtzneko.search('elf');
+  const results = await HMNeko.search('elf');
   console.log('Search results:', results.length);
 
   if (!results.length) return;
 
-  const detail = await qrtzneko.detail(results[0].url);
+  const detail = await HMNeko.detail(results[0].url);
   console.log('Title:', detail.title);
   console.log('Players:', detail.iframes.length);
 
-  const streamUrl = await qrtzneko.stream(results[0].url);
+  const streamUrl = await HMNeko.stream(results[0].url);
   console.log('Stream URL:', streamUrl);
 })();
 ```
@@ -801,7 +801,7 @@ import asyncio
 import aiohttp
 from urllib.parse import urlencode, quote
 
-BASE_URL = "https://qrtzneko.vercel.app"
+BASE_URL = "https://hmnekopoi.vercel.app"
 
 
 async def request(session: aiohttp.ClientSession, path: str) -> dict:
@@ -812,7 +812,7 @@ async def request(session: aiohttp.ClientSession, path: str) -> dict:
         return data
 
 
-class QrtzNekoClient:
+class HMNekoClient:
     def __init__(self, session: aiohttp.ClientSession):
         self.session = session
 
@@ -851,7 +851,7 @@ class QrtzNekoClient:
 
 async def main():
     async with aiohttp.ClientSession() as session:
-        client = QrtzNekoClient(session)
+        client = HMNekoClient(session)
 
         results = await client.search("elf")
         print(f"Found: {len(results)} results")
@@ -874,7 +874,7 @@ asyncio.run(main())
 ### TypeScript — Typed Client
 
 ```typescript
-const BASE_URL = 'https://qrtzneko.vercel.app';
+const BASE_URL = 'https://hmnekopoi.vercel.app';
 
 interface VideoItem {
   title: string;
@@ -917,7 +917,7 @@ async function api<T>(path: string): Promise<T> {
   return json.data;
 }
 
-export const qrtzneko = {
+export const HMNeko = {
   search: (query: string) =>
     api<VideoItem[]>(`/api/search?q=${encodeURIComponent(query)}`),
 
@@ -955,7 +955,7 @@ export const qrtzneko = {
 
 ```
 ┌─────────────────────────────────────────────┐
-│              QrtzNeko API                   │
+│              HMNeko API                   │
 │           (Vercel Serverless)               │
 └──────────────────┬──────────────────────────┘
                    │
@@ -1054,10 +1054,10 @@ MIT License — bebas digunakan, dimodifikasi, dan didistribusikan dengan tetap 
 
 <div align="center">
 
-**QrtzNeko API** · dibuat oleh [@meguminn1](https://github.com/meguminn1)
+**HMNeko API** · dibuat oleh [@meguminn1](https://github.com/meguminn1)
 
 [![GitHub](https://img.shields.io/badge/GitHub-meguminn1-181717?style=flat-square&logo=github)](https://github.com/meguminn1/nekopoi-scrapper)
 [![Issues](https://img.shields.io/badge/Issues-Open-red?style=flat-square&logo=github)](https://github.com/meguminn1/nekopoi-scrapper/issues)
-[![Live API](https://img.shields.io/badge/API-qrtzneko.vercel.app-000?style=flat-square&logo=vercel)](https://qrtzneko.vercel.app)
+[![Live API](https://img.shields.io/badge/API-hmnekopoi.vercel.app-000?style=flat-square&logo=vercel)](https://hmnekopoi.vercel.app)
 
 </div>
