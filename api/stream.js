@@ -8,11 +8,20 @@ module.exports = async (req, res) => {
   let browser;
   try {
     browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-    });
+  args: [
+    ...chromium.args,
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    "--disable-dev-shm-usage",
+    "--disable-gpu",
+    "--single-process",
+    "--no-zygote"
+  ],
+  defaultViewport: chromium.defaultViewport,
+  executablePath: await chromium.executablePath(),
+  headless: true,
+  ignoreHTTPSErrors: true,
+});
 
     const page = await browser.newPage();
     await page.setUserAgent('Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36');
