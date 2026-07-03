@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QrtzNeko API — Hentai Streaming API for Developers</title>
+<title>HMNeko API — Hentai Streaming API for Developers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -352,8 +352,8 @@ footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;color
       <h3>Deploy ke Vercel</h3>
       <p>Clone repository dan jalankan dalam hitungan menit. Gratis, tanpa konfigurasi rumit.</p>
       <div class="deploy-code">
-        <span class="cmd">git clone</span> <span class="arg">https://github.com/username/qrtzneko-api</span>
-        <span class="cmd">cd</span> <span class="arg">qrtzneko-api</span>
+        <span class="cmd">git clone</span> <span class="arg">https://github.com/username/HMNeko-api</span>
+        <span class="cmd">cd</span> <span class="arg">HMNeko-api</span>
         <span class="cmd">vercel</span> <span class="arg">--prod</span>
       </div>
       <a href="https://vercel.com" class="btn btn-primary" target="_blank">Deploy Now →</a>
@@ -362,7 +362,7 @@ footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;color
 </main>
 
 <footer>
-  <p>QrtzNeko API · Tidak berafiliasi dengan NekoPoi.care · Dibuat dengan ❤️</p>
+  <p>HMNeko API · Tidak berafiliasi dengan NekoPoi.care · Dibuat dengan ❤️</p>
 </footer>
 
 <script>
@@ -373,12 +373,12 @@ const ENDPOINTS = [
   {id:'category',path:'/api/category',desc:'Semua kategori NekoPoi lengkap dengan endpoint terkait.',params:'',resp:'{\n  "success":true,\n  "data":[\n    {"name":"3D Hentai","slug":"3d-hentai",\n     "endpoint":"/api/list?category=3d-hentai"},\n    {"name":"JAV Cosplay","slug":"jav-cosplay",\n     "endpoint":"/api/list?category=jav-cosplay"}\n  ]\n}',timing:'< 1s',cache:'5 menit'},
   {id:'list',path:'/api/list',desc:'Video dari home, kategori, halaman, atau A-Z.',params:'type=home&category=3d-hentai&page=1&letter=a',resp:'{\n  "success":true,\n  "data":[\n    {"title":"[3D SUB INDO] Mantra Cabul...",\n     "url":"https://...","poster":"https://..."}\n  ],\n  "meta":{"url":"https://...","count":20}\n}',timing:'< 2s',cache:'5 menit'},
   {id:'search',path:'/api/search',desc:'Cari video berdasarkan judul.',params:'q=elf',resp:'{\n  "success":true,\n  "data":[\n    {"title":"[3D] Rahasia Futa Elf...","url":"https://..."}\n  ]\n}',timing:'< 2s',cache:'5 menit'},
-  {id:'detail',path:'/api/detail',desc:'Detail video: judul, poster, deskripsi, iframe player.',params:'url=https://nekopoi.care/...',resp:'{\n  "success":true,\n  "data":{\n    "title":"...","poster":"https://...",\n    "description":"...","iframes":["..."]\n  }\n}',timing:'< 2s',cache:'5 menit'},
-  {id:'stream',path:'/api/stream',desc:'Direct m3u8 via headless browser. 15–30 detik.',params:'url=https://nekopoi.care/...',resp:'{\n  "success":true,\n  "stream_url":"https://...m3u8?t=..."\n}',timing:'15–30s ⚠️',cache:'Tidak'},
+  {id:'detail',path:'/api/detail',desc:'Detail video: judul, poster, deskripsi, iframe player.',params:'url=https://nekopoi.care/overflow-episode-7-subtitle-indonesia/',resp:'{\n  "success":true,\n  "data":{\n    "title":"...","poster":"https://...",\n    "description":"...","iframes":["..."]\n  }\n}',timing:'< 2s',cache:'5 menit'},
+  {id:'stream',path:'/api/stream',desc:'Direct m3u8 via headless browser. 15–30 detik.',params:'url=https://nekopoi.care/overflow-episode-7-subtitle-indonesia/',resp:'{\n  "success":true,\n  "stream_url":"https://...m3u8?t=..."\n}',timing:'15–30s ⚠️',cache:'Tidak'},
   {id:'genres',path:'/api/genres',desc:'Semua genre: Ahegao, Big Boobs, NTR, dsb.',params:'',resp:'{\n  "success":true,\n  "data":[\n    {"name":"Ahegao","url":"https://..."},\n    {"name":"Big Boobs","url":"https://..."}\n  ]\n}',timing:'< 1s',cache:'5 menit'},
-  {id:'genre',path:'/api/genre',desc:'Video berdasarkan genre spesifik.',params:'url=https://nekopoi.care/genre/big-boobs/&page=1',resp:'{\n  "success":true,\n  "data":[\n    {"title":"Bakunyuu Bomb Ep 1","url":"https://..."}\n  ]\n}',timing:'< 2s',cache:'5 menit'},
-  {id:'episodes',path:'/api/episodes',desc:'Semua episode dari halaman seri/batch.',params:'url=https://nekopoi.care/episode/kokuhaku-sub/',resp:'{\n  "success":true,\n  "data":[\n    {"title":"Kokuhaku Vol 1 Sub-Eng","url":"https://..."}\n  ]\n}',timing:'< 2s',cache:'5 menit'},
-  {id:'random',path:'/api/random',desc:'URL video acak.',params:'',resp:'{\n  "success":true,\n  "url":"https://nekopoi.care/..."\n}',timing:'< 2s',cache:'Tidak'},
+  {id:'genre',path:'/api/genre',desc:'Video berdasarkan genre spesifik.',params:'url=https://nekopoi.care/genres/futanari/&page=1',resp:'{\n  "success":true,\n  "data":[\n    {"title":"Bakunyuu Bomb Ep 1","url":"https://..."}\n  ]\n}',timing:'< 2s',cache:'5 menit'},
+  {id:'episodes',path:'/api/episodes',desc:'Semua episode dari halaman seri/batch.',params:'url=https://nekopoi.care/hentai/overflow/',resp:'{\n  "success":true,\n  "data":[\n    {"title":"Kokuhaku Vol 1 Sub-Eng","url":"https://..."}\n  ]\n}',timing:'< 2s',cache:'5 menit'},
+  {id:'random',path:'/api/random',desc:'URL video acak.',params:'',resp:'{\n  "success":true,\n  "url":"https://nekopoi.care/overflow-episode-7-subtitle-indonesia/"\n}',timing:'< 2s',cache:'Tidak'},
   {id:'schedule',path:'/api/schedule',desc:'Jadwal rilis hentai dari Jepang.',params:'',resp:'{\n  "success":true,\n  "data":[\n    {"date":"Mei 2026",\n     "items":["Chimimouryou (Ep 2)"]}\n  ]\n}',timing:'< 2s',cache:'5 menit'},
 ];
 
