@@ -20,9 +20,6 @@ module.exports = async (req, res) => {
   try {
     const executablePath = await chromium.executablePath();
 
-    console.log("Node:", process.version);
-    console.log("Chromium:", executablePath);
-
     browser = await puppeteer.launch({
       executablePath,
       headless: true,
@@ -33,8 +30,6 @@ module.exports = async (req, res) => {
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
         "--disable-gpu",
-        "--single-process",
-        "--no-zygote",
       ],
       ignoreHTTPSErrors: true,
     });
@@ -45,11 +40,11 @@ module.exports = async (req, res) => {
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/138.0.0.0 Safari/537.36"
     );
 
-    let streamUrl = null;
+    let m3u8 = null;
 
     await page.setRequestInterception(true);
 
-    page.on("request", (request) => {
+    page.on("request", request => {
       const reqUrl = request.url();
 
       if (
@@ -57,7 +52,7 @@ module.exports = async (req, res) => {
         reqUrl.includes(".mpd")
       ) {
         console.log("STREAM:", reqUrl);
-        streamUrl = reqUrl;
+        m3u8 = reqUrl;
       }
 
       request.continue();
@@ -71,7 +66,7 @@ module.exports = async (req, res) => {
     const iframeUrl = await page
       .$eval(
         'iframe[src*="playmogo.com"], iframe[src*="streampoi.com"]',
-        (el) => el.src
+        el => el.src
       )
       .catch(() => null);
 
@@ -87,9 +82,10 @@ module.exports = async (req, res) => {
       timeout: 30000,
     });
 
-    await page.waitForTimeout(8000);
+    // Tunggu 8 detik (pengganti waitForTimeout)
+    await new Promise(resolve => setTimeout(resolve, 8000));
 
-    if (!streamUrl) {
+    if (!m3u8) {
       return res.status(404).json({
         success: false,
         error: "Stream (.m3u8) tidak ditemukan",
@@ -98,8 +94,9 @@ module.exports = async (req, res) => {
 
     return res.json({
       success: true,
-      stream_url: streamUrl,
+      stream_url: m3u8,
     });
+
   } catch (err) {
     console.error(err);
 
@@ -108,6 +105,7 @@ module.exports = async (req, res) => {
       error: err.message,
       stack: err.stack,
     });
+
   } finally {
     if (browser) {
       await browser.close().catch(() => {});
